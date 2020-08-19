@@ -11,12 +11,10 @@ public class Rastrigin extends Problem {
 
     @Override
     public double evaluate(double[] x) {
-        double fitness = 0.0;
         double s1 = 0.0;
         for(int i = 0; i < x.length; i++) {
-            s1 = s1 + + Math.pow(x[i], 2) - 10 * Math.cos(2*Math.PI*x[i]);
-            fitness = fitness + (10 * i + s1);
+            s1 = s1 + Math.pow(x[i], 2) - 10 * Math.cos(2*Math.PI*x[i]);
         }
-        return fitness;
+        return (10 * x.length + s1);
     }
 }
