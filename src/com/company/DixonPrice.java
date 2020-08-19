@@ -11,13 +11,10 @@ public class DixonPrice extends Problem {
 
     @Override
     public double evaluate(double[] x) {
-        double fitness = 0.0;
         double s1 = 0.0;
         for(int i = 1; i < x.length; i++) {
             s1 = s1 + i+1*Math.pow(2*Math.pow(x[i],2)-x[i-1], 2);
         }
-
-        fitness = Math.pow(x[0]-1,2) + s1;
-        return fitness;
+        return Math.pow(x[0]-1,2) + s1;
     }
 }

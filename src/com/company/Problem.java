@@ -77,9 +77,9 @@ public abstract class Problem {
     public void setFeasible(double[] x) {
         for(int i = 0; i < d; i++) {
             if(x[i] > upper[i])
-                x[i] = upper[i];
+                x[i] = upper[i]-(x[i]-upper[i]);
             if(x[i] < lower[i])
-                x[i] = lower[i];
+                x[i] = lower[i]+(lower[i]-x[i]);
         }
     }
 

@@ -11,8 +11,6 @@ public class Beale extends Problem {
 
     @Override
     public double evaluate(double[] x) {
-        double fitness = 0.0;
-        fitness = Math.pow(1.5-x[0]+x[0]*x[1],2)+Math.pow(2.25-x[0]+x[0]*Math.pow(x[1],2),2)+Math.pow(2.625-x[0]+x[0]*Math.pow(x[1],3),2);
-        return fitness;
+        return Math.pow(1.5-x[0]+x[0]*x[1],2)+Math.pow(2.25-x[0]+x[0]*Math.pow(x[1],2),2)+Math.pow(2.625-x[0]+x[0]*Math.pow(x[1],3),2);
     }
 }

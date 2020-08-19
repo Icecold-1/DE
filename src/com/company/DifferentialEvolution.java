@@ -23,6 +23,7 @@ public class DifferentialEvolution {
 
     public Solution exec(Problem problem) {
         this.problem = problem;
+        population.clear();
         init();
 
         while (problem.FESCount < problem.getMaxFES()) {
@@ -46,24 +47,48 @@ public class DifferentialEvolution {
 
                 Solution y = new Solution(x);
 
+                /// Mutacija
                 for(int i = 0; i < problem.getD(); i++) {
                     double ri = r.nextDouble();
                     if(ri < CR || i == R)
                         y.x[i] = a.x[i] + F * (b.x[i] - c.x[i]);
                 }
 
-                if(!problem.isFeasible(y.x))
-                    problem.setFeasible(y.x);
 
-                problem.evaluate(y);
-                problem.FESCount++;
 
-                if(y.getFitness() <= x.getFitness()) {
-                    population.set(population.indexOf(x), y);
-                    if(best.getFitness() >= y.getFitness())
-                        best = y;
+                int rand_j = r.nextInt() % problem.d;
+
+                Solution k = new Solution(problem.d);
+
+                // Krizanje
+                for(int j = 0; j < problem.d; j++) {
+                        double rand_ij = r.nextDouble();
+                        if(rand_ij < CR || rand_j == j) {
+                            k.x[j] = y.x[j];
+                        } else {
+                            k.x[j] = x.x[j];
+                        }
                 }
+
+                if(!problem.isFeasible(k.x))
+                    problem.setFeasible(k.x);
+
+                double fitness_old = x.fitness;
+                double fitness_new = problem.evaluate(k.x);
+
+                k.fitness = fitness_new;
+
+
+
+                if(fitness_new < fitness_old) {
+                    population.set(population.indexOf(x), k);
+                    if(best.getFitness() >= k.getFitness())
+                        best = k;
+                }
+
+                problem.FESCount++;
             }
+            //problem.FESCount++;
             if(problem.FESCount > problem.maxFES)
                 break;
         }
@@ -80,6 +105,7 @@ public class DifferentialEvolution {
         population.add(new Solution(best));
         for (int i = 0; i < NP - 1; i++) {
             Solution newSolution = problem.generateRandomSolution();
+            newSolution.fitness = problem.evaluate(newSolution.x);
             population.add(newSolution);
         }
     }

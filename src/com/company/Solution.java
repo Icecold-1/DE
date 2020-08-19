@@ -17,6 +17,10 @@ public class Solution  {
         this.x = s.x.clone();
     }
 
+    public Solution(int d) {
+        this.x = new double[d];
+    }
+
     public double[] getX() {
         return x;
     }
